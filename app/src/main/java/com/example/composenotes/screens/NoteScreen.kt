@@ -49,14 +49,14 @@ fun NoteScreen(
             Surface {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(32.dp)
+                        .fillMaxWidth()
+                        .padding(all = 32.dp)
                 ) {
                     Text(
                         text = Constants.Keys.EDIT_NOTE,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier.padding(vertical = 8.dp)
                     )
                     OutlinedTextField(
                         value = title,
@@ -73,7 +73,10 @@ fun NoteScreen(
                     Button(
                         modifier = Modifier.padding(top = 16.dp),
                         onClick = {
-                            viewModel.updateNote(note = Note(note.id, note.title, note.subtitle)) {
+                            viewModel.updateNote(
+                                note =
+                                Note(id = note.id, title = title, subtitle = subtitle)
+                            ) {
                                 navController.navigate(NavRoute.Main.route)
                             }
                         }
@@ -84,7 +87,9 @@ fun NoteScreen(
             }
         }
     ) {
-        Scaffold(modifier = Modifier.fillMaxWidth()) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize()
+        ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -95,7 +100,6 @@ fun NoteScreen(
                         .fillMaxWidth()
                         .padding(32.dp)
                 ) {
-
                     Column(
                         modifier = Modifier.padding(vertical = 8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -130,24 +134,23 @@ fun NoteScreen(
                     }) {
                         Text(text = Constants.Keys.UPDATE)
                     }
-
                     Button(onClick = {
-                        viewModel.deleteNote(note = note){
+                        viewModel.deleteNote(note = note) {
                             navController.navigate(NavRoute.Main.route)
                         }
                     }) {
                         Text(text = Constants.Keys.DELETE)
                     }
                 }
-
                 Button(
-                    onClick = { /*TODO*/ },
                     modifier = Modifier
                         .padding(top = 16.dp)
                         .padding(horizontal = 32.dp)
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    onClick = {
+                        navController.navigate(NavRoute.Main.route)
+                    }
                 ) {
-                    navController.navigate(NavRoute.Main.route)
                     Text(text = Constants.Keys.NAV_BACK)
                 }
             }
