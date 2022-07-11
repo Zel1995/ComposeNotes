@@ -22,7 +22,7 @@ import com.example.composenotes.utils.TYPE_FIREBASE
 import com.example.composenotes.utils.TYPE_ROOM
 
 @Composable
-fun StartScreen(navController: NavHostController) {
+fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
     val context = LocalContext.current
     val mViewModel: MainViewModel =
         viewModel(
@@ -38,7 +38,7 @@ fun StartScreen(navController: NavHostController) {
             Text(text = "use?")
             Button(
                 onClick = {
-                    mViewModel.initDatabase(TYPE_ROOM){
+                    mViewModel.initDatabase(TYPE_ROOM) {
                         navController.navigate(route = NavRoute.Main.route)
                     }
                 },
@@ -50,7 +50,7 @@ fun StartScreen(navController: NavHostController) {
             }
             Button(
                 onClick = {
-                    mViewModel.initDatabase(TYPE_FIREBASE){
+                    mViewModel.initDatabase(TYPE_FIREBASE) {
                         navController.navigate(route = NavRoute.Main.route)
                     }
                 },
@@ -68,6 +68,12 @@ fun StartScreen(navController: NavHostController) {
 @Composable
 fun prevStartScreen() {
     ComposeNotesTheme {
-        StartScreen(navController = rememberNavController())
+        val context = LocalContext.current
+        val mViewModel: MainViewModel =
+            viewModel(
+                factory =
+                MainViewModelFactory(context.applicationContext as Application)
+            )
+        StartScreen(navController = rememberNavController(), viewModel = mViewModel)
     }
 }

@@ -30,14 +30,8 @@ import com.example.composenotes.navigation.NavRoute
 import com.example.composenotes.ui.theme.ComposeNotesTheme
 
 @Composable
-fun MainScreen(navController: NavHostController) {
-    val context = LocalContext.current
-    val mViewModel: MainViewModel =
-        viewModel(
-            factory =
-            MainViewModelFactory(context.applicationContext as Application)
-        )
-
+fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
+    val notes = viewModel.readAllNotes().observeAsState(listOf()).value
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -53,6 +47,11 @@ fun MainScreen(navController: NavHostController) {
             }
         }
     ) {
+        LazyColumn {
+            items(notes) { note ->
+                NoteItem(note = note, navController = navController)
+            }
+        }
     }
 }
 
@@ -87,6 +86,12 @@ fun NoteItem(note: Note, navController: NavHostController) {
 @Composable
 fun prevMainScreen() {
     ComposeNotesTheme {
-        MainScreen(navController = rememberNavController())
+        val context = LocalContext.current
+        val mViewModel: MainViewModel =
+            viewModel(
+                factory =
+                MainViewModelFactory(context.applicationContext as Application)
+            )
+        MainScreen(navController = rememberNavController(), viewModel = mViewModel)
     }
 }

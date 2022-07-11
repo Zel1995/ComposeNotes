@@ -4,10 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.composenotes.database.room.AppRoomDatabase
 import com.example.composenotes.database.room.repository.RoomRepository
+import com.example.composenotes.model.Note
 import com.example.composenotes.utils.REPOSITORY
 import com.example.composenotes.utils.TYPE_ROOM
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val context = application
@@ -16,10 +20,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             TYPE_ROOM -> {
                 val dao = AppRoomDatabase.getInstance(context).getRoomDao()
                 REPOSITORY = RoomRepository(dao)
-                onSuccess
+                onSuccess()
             }
         }
     }
+
+    fun addNote(note: Note, onSuccess: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            REPOSITORY.create(note) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    onSuccess()
+                }
+            }
+        }
+    }
+
+    fun readAllNotes() = REPOSITORY.readAll
 }
 
 class MainViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
