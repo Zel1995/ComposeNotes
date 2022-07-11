@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "800180739145",
+    "project_id": "composenotes-6283e",
+    "storage_bucket": "composenotes-6283e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800180739145:android:ae29574bf006800d84f398",
+        "android_client_info": {
+          "package_name": "com.example.composenotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800180739145-ki62q0bsv5tk2nqbcv7b7j112sgbmrd8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAft8Vgd0ya6-BPVIvRKkxYHoqaNQk4dA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800180739145-ki62q0bsv5tk2nqbcv7b7j112sgbmrd8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
