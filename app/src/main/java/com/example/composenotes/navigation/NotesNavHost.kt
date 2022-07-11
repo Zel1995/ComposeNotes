@@ -9,12 +9,16 @@ import com.example.composenotes.screens.AddScreen
 import com.example.composenotes.screens.MainScreen
 import com.example.composenotes.screens.NoteScreen
 import com.example.composenotes.screens.StartScreen
+import com.example.composenotes.utils.Constants
+import com.example.composenotes.utils.Constants.Screens.ADD_SCREEN
+import com.example.composenotes.utils.Constants.Screens.MAIN_SCREEN
+import com.example.composenotes.utils.Constants.Screens.NOTE_SCREEN
 
 sealed class NavRoute(val route: String) {
-    object Start : NavRoute("start_screen")
-    object Main : NavRoute("main_creen")
-    object Add : NavRoute("add_creen")
-    object Note : NavRoute("note_creen")
+    object Start : NavRoute(NOTE_SCREEN)
+    object Main : NavRoute(MAIN_SCREEN)
+    object Add : NavRoute(ADD_SCREEN)
+    object Note : NavRoute(NOTE_SCREEN)
 }
 
 @Composable
@@ -39,10 +43,11 @@ fun NotesNavHost(mViewModel: MainViewModel) {
                 viewModel = mViewModel
             )
         }
-        composable(NavRoute.Note.route) {
+        composable(NavRoute.Note.route + "/{${Constants.Keys.ID}}") { backStackEntry ->
             NoteScreen(
                 navController = navController,
-                viewModel = mViewModel
+                viewModel = mViewModel,
+                noteId = backStackEntry.arguments?.getString(Constants.Keys.ID)
             )
         }
     }
